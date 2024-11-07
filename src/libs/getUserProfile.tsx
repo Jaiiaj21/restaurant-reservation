@@ -1,7 +1,7 @@
 
 const getUserProfile = async (token: string) => {
 
-  const response = await fetch("https://deploy-vaccine-app-backend.vercel.app/api/v1/auth/me", {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/auth/me`, {
     method: "GET",
     headers: {
       authorization: `Bearer ${token}`,
