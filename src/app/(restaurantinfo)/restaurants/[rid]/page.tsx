@@ -1,4 +1,6 @@
-import getRestaurant from "@/app/libs/getRestaurant";
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
+import getRestaurant from "@/libs/getRestaurant";
+import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -6,16 +8,7 @@ const RestaurantDetailPage = async ({ params }: { params: { rid: string } }) => 
 
   const restaurantDetail: RestaurantItem = await getRestaurant(params.rid);
 
-  /**
-   * Mock Data for Demontration Only
-   */
-
-  /*const mockCarRepo = new Map();
-  mockCarRepo.set("001", { name: "civic", image: "/img/civic.jpg" })
-  mockCarRepo.set("002", { name: "fortuner", image: "/img/fortuner.jpg" })
-  mockCarRepo.set("003", { name: "tesla", image: "/img/tesla.jpg" })
-  mockCarRepo.set("004", { name: "dream car", image: "/img/car1.jpg" })
-  */
+  const session = await getServerSession(authOptions)
 
   return (
     <main className="text-center p-5">
@@ -38,7 +31,7 @@ const RestaurantDetailPage = async ({ params }: { params: { rid: string } }) => 
           <div className="text-md mx-5">
             Tel: {restaurantDetail.tel}
           </div>
-          <Link href={`/booking/?id=${params.rid}&model=${restaurantDetail.name}`}>
+          <Link href={session ? `/booking/?id=${params.rid}&model=${restaurantDetail.name}` : `/login`}>
             <button className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 text-white shadow-sm">
               Booking restaurant
             </button>

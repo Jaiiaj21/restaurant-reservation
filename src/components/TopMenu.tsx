@@ -1,12 +1,18 @@
+'use client'
+import TopMenuAuthItem from '@/components/authentication/TopMenuAuthItem';
 import TopMenuItem from '@/components/TopMenuItem';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 //import { getServerSession } from 'next-auth';
 //import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
-const TopMenu = async () => {
+const TopMenu = () => {
+  const pathname = usePathname();
+  const hideTopMenu = pathname === "/login" || pathname === "/register";
 
   //const session = await getServerSession(authOptions)
+  if (hideTopMenu) return null
 
   return (
     <div className="h-[50px] bg-white fixed top-0 left-0 right-0 w-full z-30 border-t border-b border-gray-300 flex flex-row">
@@ -16,21 +22,8 @@ const TopMenu = async () => {
       <TopMenuItem title='Restaurant' pageRef='/restaurants' />
       <TopMenuItem title='Reservations' pageRef='/reservations' />
 
-      <div className='flex flex-row absolute right-0 h-full'>
-        {/* {
-          session ?
-            <Link href="/api/auth/signout">
-              <div className='flex items-center h-full px-2 text-cyan-600 text-smm'>
-                Sign-Out of {session.user?.name}
-              </div>
-            </Link>
-            :
-            <Link href="/api/auth/signin">
-              <div className='flex items-center h-full px-2 text-cyan-600 text-smm'>
-                Sign-In
-              </div>
-            </Link>
-        } */}
+      <div className='flex flex-row absolute right-0 h-full w-auto'>
+        <TopMenuAuthItem />
       </div>
     </div>
   )

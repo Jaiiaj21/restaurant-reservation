@@ -1,4 +1,4 @@
-import getRestaurants from "@/app/libs/getRestaurants";
+import getRestaurants from "@/libs/getRestaurants";
 import RestaurantCatalog from "@/components/RestaurantCatalog";
 import { LinearProgress } from "@mui/material";
 import { Suspense } from "react";
