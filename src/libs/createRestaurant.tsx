@@ -39,8 +39,8 @@ const createRestaurant = async ({
   })
 
   if (!response.ok) {
-    console.error('Error during register:', response);
-    throw new Error("Failed to register")
+    console.error('Error during create new restaurant:', response);
+    throw new Error("Failed to create new restaurant")
   }
 
   const res = await response.json();

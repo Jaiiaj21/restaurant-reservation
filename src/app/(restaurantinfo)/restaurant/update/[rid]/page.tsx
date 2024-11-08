@@ -1,11 +1,14 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
-import createRestaurant from "@/libs/createRestaurant";
+import getRestaurant from "@/libs/getRestaurant";
 import getUserProfile from "@/libs/getUserProfile";
+import updateRestaurant from "@/libs/updateRestaurant";
 import { getServerSession } from "next-auth";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
-const CreateRestaurantPage = async () => {
+const UpdateRestaurantPage = async ({ params }: { params: { rid: string } }) => {
+
+  const restaurantDetail: RestaurantItem = await getRestaurant(params.rid);
 
   const session = await getServerSession(authOptions)
   if (!session || !session.user.token) return null
@@ -13,17 +16,17 @@ const CreateRestaurantPage = async () => {
   let profile = null
   if (session && session.user.token) profile = await getUserProfile(session.user.token)
 
-  const handleCreateNew = async (addRestaurantForm: FormData) => {
+  const handleUpdateRestaurant = async (updateRestaurantForm: FormData) => {
     'use server'
-    const name = addRestaurantForm.get("name") || ''
-    const foodtype = addRestaurantForm.get("foodtype") || ''
-    const picture = addRestaurantForm.get("picture") || ''
-    const address = addRestaurantForm.get("address") || ''
-    const province = addRestaurantForm.get("province") || ''
-    const postalcode = addRestaurantForm.get("postalcode") || ''
-    const tel = addRestaurantForm.get("tel") || ''
+    const name = updateRestaurantForm.get("name") || ''
+    const foodtype = updateRestaurantForm.get("foodtype") || ''
+    const picture = updateRestaurantForm.get("picture") || ''
+    const address = updateRestaurantForm.get("address") || ''
+    const province = updateRestaurantForm.get("province") || ''
+    const postalcode = updateRestaurantForm.get("postalcode") || ''
+    const tel = updateRestaurantForm.get("tel") || ''
 
-    const addNewRestaurantResponse = await createRestaurant({
+    const updateRestaurantResponse = await updateRestaurant(params.rid, {
       name: name as string,
       foodtype: foodtype as string,
       address: address as string,
@@ -33,18 +36,18 @@ const CreateRestaurantPage = async () => {
       picture: picture as string,
       token: session.user.token
     })
-    if (addNewRestaurantResponse.success) {
-      revalidateTag("restaurants")
-      redirect("/restaurants")
+    if (updateRestaurantResponse.success) {
+      revalidateTag("restaurant")
+      redirect(`/restaurants/${params.rid}`)
     }
   }
 
   return profile.data.role === "admin" ? (
     <main className="bg-slate-100 p-5 mt-[80px] mx-8">
-      <form action={handleCreateNew} className="mx-8 ">
+      <form action={handleUpdateRestaurant} className="mx-8 ">
 
         <div className="text-2xl text-blue-700 my-3">
-          Create New Restaurant
+          Update Restaurant
         </div>
 
         <div className="flex items-center w-1/2 my-2">
@@ -53,7 +56,7 @@ const CreateRestaurantPage = async () => {
             Restaurant Name
           </label>
 
-          <input type='text' required id="name" name="name" placeholder="Restaurant Name"
+          <input type='text' required id="name" name="name" placeholder="Restaurant Name" defaultValue={restaurantDetail.name}
             className="bg-white border-2 border-gray-200 rounded w-full p-2 text-gray-700 focus:outline-none focus:border-blue-400" />
 
         </div>
@@ -64,7 +67,7 @@ const CreateRestaurantPage = async () => {
             Food Type
           </label>
 
-          <input type='text' required id="foodtype" name="foodtype" placeholder="Food Type"
+          <input type='text' required id="foodtype" name="foodtype" placeholder="Food Type" defaultValue={restaurantDetail.foodtype}
             className="bg-white border-2 border-gray-200 rounded w-full p-2 text-gray-700 focus:outline-none focus:border-blue-400" />
 
         </div>
@@ -75,7 +78,7 @@ const CreateRestaurantPage = async () => {
             Picture
           </label>
 
-          <input type='text' required id="picture" name="picture" placeholder="URL"
+          <input type='text' required id="picture" name="picture" placeholder="URL" defaultValue={restaurantDetail.picture}
             className="bg-white border-2 border-gray-200 rounded w-full p-2 text-gray-700 focus:outline-none focus:border-blue-400" />
 
         </div>
@@ -86,7 +89,7 @@ const CreateRestaurantPage = async () => {
             Address
           </label>
 
-          <input type='text' required id="address" name="address" placeholder="Address"
+          <input type='text' required id="address" name="address" placeholder="Address" defaultValue={restaurantDetail.address}
             className="bg-white border-2 border-gray-200 rounded w-full p-2 text-gray-700 focus:outline-none focus:border-blue-400" />
 
         </div>
@@ -97,7 +100,7 @@ const CreateRestaurantPage = async () => {
             Province
           </label>
 
-          <input type='text' required id="province" name="province" placeholder="Province"
+          <input type='text' required id="province" name="province" placeholder="Province" defaultValue={restaurantDetail.province}
             className="bg-white border-2 border-gray-200 rounded w-full p-2 text-gray-700 focus:outline-none focus:border-blue-400" />
 
         </div>
@@ -108,7 +111,7 @@ const CreateRestaurantPage = async () => {
             Postal Code
           </label>
 
-          <input type='text' required id="postalcode" name="postalcode" placeholder="Postal Code"
+          <input type='text' required id="postalcode" name="postalcode" placeholder="Postal Code" defaultValue={restaurantDetail.postalcode}
             className="bg-white border-2 border-gray-200 rounded w-full p-2 text-gray-700 focus:outline-none focus:border-blue-400" />
 
         </div>
@@ -119,16 +122,16 @@ const CreateRestaurantPage = async () => {
             Telephone Number
           </label>
 
-          <input type='text' required id="tel" name="tel" placeholder="Telephone Number"
+          <input type='text' required id="tel" name="tel" placeholder="Telephone Number" defaultValue={restaurantDetail.tel}
             className="bg-white border-2 border-gray-200 rounded w-full p-2 text-gray-700 focus:outline-none focus:border-blue-400" />
 
         </div>
 
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white p-2 rounded">Add New Restaurant</button>
+        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white p-2 rounded">Update Restaurant</button>
 
       </form>
     </main>
   ) : null
 }
 
-export default CreateRestaurantPage
+export default UpdateRestaurantPage

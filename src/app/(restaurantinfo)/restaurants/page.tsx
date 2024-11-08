@@ -10,16 +10,16 @@ import getUserProfile from "@/libs/getUserProfile";
 const Reataurant = async () => {
   const restaurants = getRestaurants();
   const session = await getServerSession(authOptions)
-  if (!session || !session.user.token) return null
+  let profile = null
+  if (session && session.user.token) profile = await getUserProfile(session.user.token)
 
-  const profile = await getUserProfile(session.user.token)
 
   return (
     <main className="text-center pt-[80px] h-[100vh]">
       <Suspense fallback={<p>Loading ... <LinearProgress /></p>}>
         <RestaurantCatalog restaurantJson={restaurants} />
         {
-          profile.data.role === 'admin' &&
+          profile && profile.data.role === 'admin' &&
           <div className={`px-[20px] py-[12px] rounded-[6px] text-md text-slate-50 bg-slate-700 hover:opacity-80 active:opacity-60 disabled:opacity-60 fixed right-4 bottom-4`}>
             <Link href={'/restaurant/create'}>
               Create New Restaurant
