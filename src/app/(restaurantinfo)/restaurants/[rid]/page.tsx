@@ -37,7 +37,7 @@ const RestaurantDetailPage = async ({ params }: { params: { rid: string } }) => 
             Tel: {restaurantDetail.tel}
           </div>
           <button className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 text-white shadow-sm mx-5 my-3">
-            <Link href={session ? `/reservation/?id=${params.rid}&name=${restaurantDetail.name}` : `/login`}>
+            <Link href={session ? `/reservations/create?id=${params.rid}&name=${restaurantDetail.name}` : `/login`}>
               Booking restaurant
             </Link>
           </button>
