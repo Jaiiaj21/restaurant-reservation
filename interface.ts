@@ -17,3 +17,25 @@ interface RestaurantJson {
   pagination: Object,
   data: RestaurantItem[]
 }
+
+interface ReservationItem {
+  _id: string,
+  bookingDate: string,
+  numOfGuests: number,
+  user: string,
+  restaurant: {
+    _id: string,
+    name: string,
+    address: string,
+    tel: string,
+    id: string
+  } | null
+  createdAt: string,
+  __v: number
+}
+
+interface ReservationJson {
+  success: boolean,
+  count: number,
+  data: ReservationItem[]
+}

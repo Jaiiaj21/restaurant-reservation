@@ -1,0 +1,33 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
+import ReservationCollection from "@/components/ReservationCollecttion";
+import getReservations from "@/libs/getReservations";
+import getUserProfile from "@/libs/getUserProfile";
+import { LinearProgress } from "@mui/material";
+import { getServerSession } from "next-auth";
+import Link from "next/link";
+import { Suspense } from "react";
+
+const ReservationPage = async () => {
+  const session = await getServerSession(authOptions)
+  if (!session || !session.user.token) return null
+  const reservations = await getReservations(session.user.token)
+  const profile = await getUserProfile(session.user.token)
+
+  return (
+    <main className="text-center pt-[80px] h-[100vh] flex items-center flex-col">
+      <Suspense fallback={<p>Loading ... <LinearProgress /></p>}>
+        <ReservationCollection reservationJson={reservations} />
+        {/* {
+          profile && profile.data.role === 'admin' &&
+          <div className={`px-[20px] py-[12px] rounded-[6px] text-md text-slate-50 bg-slate-700 hover:opacity-80 active:opacity-60 disabled:opacity-60 fixed right-4 bottom-4`}>
+            <Link href={'/restaurant/create'}>
+              Create New Restaurant
+            </Link>
+          </div>
+        } */}
+      </Suspense>
+    </main >
+  )
+}
+
+export default ReservationPage;
