@@ -1,9 +1,11 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
+import AdminRestaurantAction from "@/components/AdminRestaurantAction";
 import getRestaurant from "@/libs/getRestaurant";
 import getUserProfile from "@/libs/getUserProfile";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
+
 
 const RestaurantDetailPage = async ({ params }: { params: { rid: string } }) => {
 
@@ -43,17 +45,7 @@ const RestaurantDetailPage = async ({ params }: { params: { rid: string } }) => 
       </div>
       {
         profile && profile.data.role === "admin" &&
-        <div className="absolute right-2 bottom-2 flex items-center">
-          <button className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 text-white shadow-sm m-3">
-            <Link href={`/restaurant/update/${params.rid}`}>
-              Update restaurant
-            </Link>
-          </button>
-          <button className="block rounded-md bg-red-600 hover:bg-red-400 px-3 py-2 text-white shadow-sm m-3">
-            Delete restaurant
-          </button>
-        </div>
-
+        <AdminRestaurantAction id={params.rid} token={session?.user.token} />
       }
     </main>
   )
