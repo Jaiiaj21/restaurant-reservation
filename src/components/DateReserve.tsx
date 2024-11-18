@@ -14,9 +14,9 @@ const DateReserve = ({
 
 
   return (
-    <div className="bg-slate-100 rounded-lg space-x-5 space-y-2 w-full px-10 py-5 flex flex-row justify-center">
+    <div className="bg-slate-100 rounded-lg space-x-5 space-y-2 w-full px-10 py-5 flex flex-row justify-center dark:bg-gray-900">
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker className="bg-white w-full" value={bookingDate} onChange={(value) => { onDateChange(value); }} />
+        <DatePicker className="bg-white w-full rounded-md dark:bg-gray-200 " value={bookingDate} onChange={(value) => { onDateChange(value); }} />
       </LocalizationProvider>
     </div >
   )

@@ -15,7 +15,7 @@ const ReservationCollection = async ({ reservationJson, role, user_id, token }: 
   if (reservationJsonReady.count === 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh]">
-        <p className="text-2xl text-gray-600 font-semibold mb-4">No Reservations Found</p>
+        <p className="text-2xl text-gray-600 font-semibold mb-4 dark:text-gray-200">No Reservations Found</p>
         <CalendarIcon className="w-16 h-16 text-gray-300" />
       </div>
     );
@@ -23,35 +23,36 @@ const ReservationCollection = async ({ reservationJson, role, user_id, token }: 
 
   return (
     <>
-      <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Manage Reservations</h1>
-      <div className="flex flex-wrap justify-center gap-6 p-4">
+      <h1 className="text-3xl font-bold text-center text-gray-800 mb-8 dark:text-gray-200">Manage Reservations</h1>
+      <div className="flex flex-wrap justify-center gap-6 p-4 ">
         {reservationJsonReady.data.map((reservationItem: ReservationItem) => {
           if (role === "admin" || (role === "user" && user_id === reservationItem.user)) {
             return (
               <div
                 key={reservationItem._id}
-                className="bg-white rounded-lg shadow-md p-6 w-full max-w-md transition-transform transform hover:scale-105 hover:shadow-lg"
+                className="bg-white rounded-lg shadow-md p-6 w-full max-w-md transition-transform transform hover:scale-105 hover:shadow-lg
+                          dark:bg-gray-800"
               >
                 <div className="flex items-center mb-4">
                   <UserIcon className="h-6 w-6 text-gray-500 mr-2" />
-                  <p className="text-lg font-medium text-gray-700">User: {reservationItem.user}</p>
+                  <p className="text-lg font-medium text-gray-700 dark:text-gray-200">User: {reservationItem.user}</p>
                 </div>
 
-                <div className="text-gray-600 mb-2">
+                <div className="text-gray-600 mb-2 dark:text-gray-200">
                   <p className="font-semibold">Restaurant Name:</p>
-                  <p className="text-gray-800">{reservationItem.restaurant?.name}</p>
+                  <p className="text-gray-800 dark:text-gray-400">{reservationItem.restaurant?.name}</p>
                 </div>
-                <div className="text-gray-600 mb-2">
+                <div className="text-gray-600 mb-2 dark:text-gray-200">
                   <p className="font-semibold">Restaurant Address:</p>
-                  <p className="text-gray-800">{reservationItem.restaurant?.address}</p>
+                  <p className="text-gray-800 dark:text-gray-400">{reservationItem.restaurant?.address}</p>
                 </div>
-                <div className="text-gray-600 mb-2">
+                <div className="text-gray-600 mb-2 dark:text-gray-200">
                   <p className="font-semibold">Booking Date:</p>
-                  <p className="text-gray-800">{reservationItem.bookingDate}</p>
+                  <p className="text-gray-800 dark:text-gray-400">{reservationItem.bookingDate}</p>
                 </div>
-                <div className="text-gray-600 mb-4">
+                <div className="text-gray-600 mb-4 dark:text-gray-200">
                   <p className="font-semibold">Number of Guests:</p>
-                  <p className="text-gray-800">{reservationItem.numOfGuests}</p>
+                  <p className="text-gray-800 dark:text-gray-400">{reservationItem.numOfGuests}</p>
                 </div>
 
                 <div className="flex justify-between mt-6">
