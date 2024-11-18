@@ -1,13 +1,11 @@
-'use client'; // Make sure it's a client-side component
+'use client';
 
-import { useEffect, useState } from 'react'; // Use useState and useEffect hooks
+import { useEffect, useState } from 'react';
 import ProductCard from "@/components/ProductCard";
 import Link from "next/link";
-import { useDarkMode } from "@/contexts/DarkModeContext"; // Import dark mode context
 
 const RestaurantCatalog = ({ restaurantJson }: { restaurantJson: Promise<RestaurantJson> }) => {
   const [restaurantJsonReady, setRestaurantJsonReady] = useState<RestaurantJson | null>(null);
-  const { isDarkMode } = useDarkMode();
 
   useEffect(() => {
     restaurantJson.then((data) => {
@@ -16,8 +14,8 @@ const RestaurantCatalog = ({ restaurantJson }: { restaurantJson: Promise<Restaur
   }, [restaurantJson]);
 
   return (
-    <div className={`pt-[30px] min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
-      <h1 className={`text-3xl font-semibold text-center mb-6 ${isDarkMode ? 'text-gray-200' : 'text-gray-800'}`}>
+    <div className="pt-[30px] min-h-screen bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-white">
+      <h1 className="text-3xl font-semibold text-center mb-6 text-gray-800 dark:text-gray-200">
         Explore {restaurantJsonReady?.count} restaurants in our catalog
       </h1>
       

@@ -48,7 +48,12 @@ const ReservationCollection = async ({ reservationJson, role, user_id, token }: 
                 </div>
                 <div className="text-gray-600 mb-2 dark:text-gray-200">
                   <p className="font-semibold">Booking Date:</p>
-                  <p className="text-gray-800 dark:text-gray-400">{reservationItem.bookingDate}</p>
+                  <p className="text-gray-800 dark:text-gray-400">{new Date(reservationItem.bookingDate).toLocaleString('en-US', {
+                                                                      weekday: 'long',
+                                                                      year: 'numeric',
+                                                                      month: 'long',
+                                                                      day: 'numeric'
+                                                                    })}</p>
                 </div>
                 <div className="text-gray-600 mb-4 dark:text-gray-200">
                   <p className="font-semibold">Number of Guests:</p>

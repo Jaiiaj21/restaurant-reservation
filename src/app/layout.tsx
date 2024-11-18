@@ -8,7 +8,6 @@ import { type ClassValue, clsx } from "clsx"
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import NextAuthProvider from "@/providers/NextAuthProvider";
-import { DarkModeProvider } from "@/contexts/DarkModeContext";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -44,10 +43,8 @@ export default async function RootLayout({
         ibmPlexSansThaiLooped.className,
       )}>
         <NextAuthProvider session={session}>
-          <DarkModeProvider> 
-            <TopMenu />
-            {children}
-          </DarkModeProvider>
+          <TopMenu />
+          {children}
         </NextAuthProvider>
       </body>
     </html>

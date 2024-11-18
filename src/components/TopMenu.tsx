@@ -6,20 +6,37 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { SunIcon, MoonIcon } from '@heroicons/react/24/outline';
-import { useDarkMode } from '@/contexts/DarkModeContext';
 
 const TopMenu = () => {
   const pathname = usePathname();
   const hideTopMenu = pathname === "/login" || pathname === "/register";
 
-  const { isDarkMode, toggleDarkMode } = useDarkMode();
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (storedTheme) {
+      setDarkMode(storedTheme === 'dark');
+    } else {
+      setDarkMode(prefersDark);
+    }
+  }, []);
+
+  const toggleDarkMode = () => {
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+
+    localStorage.setItem('theme', newDarkMode ? 'dark' : 'light');
+    document.documentElement.classList.toggle('dark', newDarkMode);
+  };
 
   if (hideTopMenu) return null;
 
   return (
-    <div className={`h-[50px] fixed top-0 left-0 right-0 w-full z-30 border-b flex items-center 
-      ${isDarkMode ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-300'} 
-      transition-colors duration-300 ease-in-out`}>
+    <div className="h-[50px] fixed top-0 left-0 right-0 w-full z-30 border-b flex items-center bg-white border-gray-300
+      dark:bg-gray-900 dark:border-gray-700 transition-colors duration-300 ease-in-out">
       <Link href={'/'} className="flex items-center h-full">
         <Image 
           src="/img/logo.jpg"
@@ -37,11 +54,10 @@ const TopMenu = () => {
         <TopMenuAuthItem />
         <button 
           onClick={toggleDarkMode} 
-          className={`ml-4 mr-2 p-2 rounded-full transition-colors 
-            ${isDarkMode ? 'bg-gray-800 text-gray-100 hover:bg-gray-700' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'} 
-            dark:hover:bg-gray-700`}
+          className="ml-4 mr-2 p-2 rounded-full transition-colors bg-gray-200 text-gray-700 hover:bg-gray-300
+            dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
         >
-          {isDarkMode ? (
+          {darkMode ? (
             <MoonIcon className="h-5 w-5" aria-hidden="true" />
           ) : (
             <SunIcon className="h-5 w-5" aria-hidden="true" />
