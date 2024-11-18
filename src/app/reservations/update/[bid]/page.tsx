@@ -39,7 +39,7 @@ const updateReservationPage = ({ params }: { params: { bid: string } }) => {
     <main className="w-[100%] flex flex-col items-center space-y-4 mt-[80px] justify-center">
 
       <div className="text-xl font-medium">
-        New Reservation
+        Update Reservation
       </div>
       <div className="text-xl font-medium">
         Restaurant: {restaurantName}

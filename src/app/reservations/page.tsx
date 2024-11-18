@@ -2,10 +2,10 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import ReservationCollection from "@/components/ReservationCollecttion";
 import getReservations from "@/libs/getReservations";
 import getUserProfile from "@/libs/getUserProfile";
-import { LinearProgress } from "@mui/material";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { Suspense } from "react";
+import { CircularProgress } from "@mui/material";
 
 const ReservationPage = async () => {
   const session = await getServerSession(authOptions)
@@ -15,7 +15,7 @@ const ReservationPage = async () => {
 
   return (
     <main className="text-center pt-[80px] h-[100vh] flex items-center flex-col">
-      <Suspense fallback={<p>Loading ... <LinearProgress /></p>}>
+      <Suspense fallback={<div className="flex justify-center items-center h-full"><CircularProgress color="inherit" /></div>}>
         <ReservationCollection reservationJson={reservations} role={profile.data.role} user_id={profile.data._id} token={session.user.token} />
         {/* {
           profile && profile.data.role === 'admin' &&
