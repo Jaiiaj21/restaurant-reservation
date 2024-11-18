@@ -19,6 +19,11 @@ const TopMenu = () => {
 
     if (storedTheme) {
       setDarkMode(storedTheme === 'dark');
+      if (storedTheme === 'dark') {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
     } else {
       setDarkMode(prefersDark);
     }
