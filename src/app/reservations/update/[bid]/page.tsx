@@ -36,9 +36,9 @@ const updateReservationPage = ({ params }: { params: { bid: string } }) => {
   }
 
   return (
-    <main className="w-[100%] flex flex-col items-center space-y-4 justify-center dark:bg-gray-900 h-full min-h-screen">
+    <main className="w-[100%] flex flex-col items-center space-y-4 dark:bg-gray-900 h-full min-h-screen">
 
-      <div className="text-xl font-medium pt-[80px] dark:text-gray-200">
+      <div className="text-xl font-medium dark:text-gray-200 mt-20">
         Update Reservation
       </div>
       <div className="text-xl font-medium dark:text-gray-400">

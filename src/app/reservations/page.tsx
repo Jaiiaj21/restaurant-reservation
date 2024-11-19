@@ -10,12 +10,12 @@ import { CircularProgress } from "@mui/material";
 const ReservationPage = async () => {
   const session = await getServerSession(authOptions)
   if (!session || !session.user.token) return null
-  const reservations = await getReservations(session.user.token)
+  const reservations = getReservations(session.user.token)
   const profile = await getUserProfile(session.user.token)
 
   return (
     <main className="text-center pt-[80px] h-full flex items-center flex-col dark:bg-gray-900 min-h-screen">
-      <Suspense fallback={<div className="flex justify-center items-center h-full"><CircularProgress color="inherit" /></div>}>
+      <Suspense fallback={<div className="flex justify-center items-center h-[90vh]"><CircularProgress color="inherit" /></div>}>
         <ReservationCollection reservationJson={reservations} role={profile.data.role} user_id={profile.data._id} token={session.user.token} />
         {/* {
           profile && profile.data.role === 'admin' &&
