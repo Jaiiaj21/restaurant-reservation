@@ -42,23 +42,23 @@ const TopMenu = () => {
   return (
     <div className="h-[50px] fixed top-0 left-0 right-0 w-full z-30 border-b flex items-center bg-white border-gray-300
       dark:bg-gray-900 dark:border-gray-700 transition-colors duration-300 ease-in-out">
-      <Link href={'/'} className="flex items-center h-full">
-        <Image 
-          src="/img/logo.jpg"
+      <Link href={'/'} className="flex items-center h-full ml-4">
+        <Image
+          src={darkMode ? "/img/logoDark.png" : "/img/logoLight.png"}
           alt="Logo"
-          width={40}
-          height={40}
+          width={50}
+          height={50}
           className="object-contain"
         />
       </Link>
       <nav className="flex flex-row items-center space-x-4 ml-4">
-        <TopMenuItem title="Restaurant" pageRef="/restaurants"/>
-        <TopMenuItem title="Reservations" pageRef="/reservations"/>
+        <TopMenuItem title="Restaurant" pageRef="/restaurants" />
+        <TopMenuItem title="Reservations" pageRef="/reservations" />
       </nav>
       <div className="ml-auto flex items-center">
-        <TopMenuAuthItem />
-        <button 
-          onClick={toggleDarkMode} 
+        <TopMenuAuthItem darkMode={darkMode} />
+        <button
+          onClick={toggleDarkMode}
           className="ml-4 mr-2 p-2 rounded-full transition-colors bg-gray-200 text-gray-700 hover:bg-gray-300
             dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700"
         >
