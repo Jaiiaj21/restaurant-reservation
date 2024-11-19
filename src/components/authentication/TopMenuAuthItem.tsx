@@ -24,19 +24,22 @@ export default function TopMenuAuthItem() {
 
   return (
     session ?
-      <div className="px-[20px] h-[100%] hover:bg-yellow-100 flex justify-center items-center text-sm text-black cursor-pointer"
+      <div className={`px-[20px] h-[100%] flex justify-center items-center text-sm cursor-pointer 
+          ${document.documentElement.classList.contains('dark') ? 'text-gray-100 hover:bg-gray-700' : 'text-black hover:bg-yellow-100'}`}
         onClick={() => { handleSignOut() }} >
         {`Sign-out of ${session?.user?.name}`}
       </div>
       :
       <>
         <Link href={`/login`}>
-          <div className="px-[20px] h-[100%] hover:bg-yellow-100 flex justify-center items-center text-sm text-black cursor-pointer ">
+          <div className={`px-[20px] h-[100%] flex justify-center items-center text-sm cursor-pointer 
+            ${document.documentElement.classList.contains('dark') ? 'text-gray-200 hover:text-indigo-400 dark:border-indigo-400' : 'text-gray-600 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400'}`}>
             Sign In
           </div>
         </Link>
         <Link href={`/register`}>
-          <div className="px-[20px] h-[100%] hover:bg-yellow-100 flex justify-center items-center text-sm text-black cursor-pointer" >
+          <div className={`px-[20px] h-[100%] flex justify-center items-center text-sm cursor-pointer 
+            ${document.documentElement.classList.contains('dark') ? 'text-gray-200 hover:text-indigo-400 dark:border-indigo-400' : 'text-gray-600 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400'}`}>
             Sign Up
           </div>
         </Link>

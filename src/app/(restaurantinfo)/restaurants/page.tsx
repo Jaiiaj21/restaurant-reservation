@@ -1,34 +1,32 @@
 import getRestaurants from "@/libs/getRestaurants";
 import RestaurantCatalog from "@/components/RestaurantCatalog";
-import { LinearProgress } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { Suspense } from "react";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import getUserProfile from "@/libs/getUserProfile";
 
-const Reataurant = async () => {
+const Restaurant = async () => {
   const restaurants = getRestaurants();
-  const session = await getServerSession(authOptions)
-  let profile = null
-  if (session && session.user.token) profile = await getUserProfile(session.user.token)
-
+  const session = await getServerSession(authOptions);
+  const profile = session && session.user.token ? await getUserProfile(session.user.token) : null;
 
   return (
-    <main className="text-center pt-[80px] h-[100vh]">
-      <Suspense fallback={<p>Loading ... <LinearProgress /></p>}>
+    <main className="text-center pt-[50px] h-[100vh] bg-gray-50 dark:bg-gray-700 dark:text-gray-100">
+      <Suspense fallback={<div className="flex justify-center items-center h-full"><CircularProgress color="inherit" /></div>}>
         <RestaurantCatalog restaurantJson={restaurants} />
-        {
-          profile && profile.data.role === 'admin' &&
-          <div className={`px-[20px] py-[12px] rounded-[6px] text-md text-slate-50 bg-slate-700 hover:opacity-80 active:opacity-60 disabled:opacity-60 fixed right-4 bottom-4`}>
+        {profile?.data.role === 'admin' && (
+          <div className="px-6 py-3 rounded-md text-md text-slate-50 fixed right-4 bottom-4 shadow-lg transition-opacity
+                          dark:text-slate-50 bg-sky-600 hover:bg-indigo-600 dark:bg-blue-500 dark:hover:bg-blue-700">
             <Link href={'/restaurant/create'}>
               Create New Restaurant
             </Link>
           </div>
-        }
+        )}
       </Suspense>
-    </main >
-  )
-}
+    </main>
+  );
+};
 
-export default Reataurant;
+export default Restaurant;

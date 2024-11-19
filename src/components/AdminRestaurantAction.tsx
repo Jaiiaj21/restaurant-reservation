@@ -17,7 +17,7 @@ const AdminRestaurantAction = ({ id, token }: { id: string, token: string }) => 
 
   return (
     <div className="absolute right-2 bottom-2 flex items-center">
-      <button className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 text-white shadow-sm m-3">
+      <button className="block rounded-md bg-sky-600 hover:bg-indigo-600 dark:bg-blue-500 dark:hover:bg-blue-700 px-3 py-2 text-white shadow-sm m-3">
         <Link href={`/restaurant/update/${id}`}>
           Update restaurant
         </Link>

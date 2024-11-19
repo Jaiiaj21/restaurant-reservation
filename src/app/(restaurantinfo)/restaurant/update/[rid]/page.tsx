@@ -7,24 +7,23 @@ import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 const UpdateRestaurantPage = async ({ params }: { params: { rid: string } }) => {
-
   const restaurantDetail: RestaurantItem = await getRestaurant(params.rid);
 
-  const session = await getServerSession(authOptions)
-  if (!session || !session.user.token) return null
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user.token) return null;
 
-  let profile = null
-  if (session && session.user.token) profile = await getUserProfile(session.user.token)
+  let profile = null;
+  if (session && session.user.token) profile = await getUserProfile(session.user.token);
 
   const handleUpdateRestaurant = async (updateRestaurantForm: FormData) => {
-    'use server'
-    const name = updateRestaurantForm.get("name") || ''
-    const foodtype = updateRestaurantForm.get("foodtype") || ''
-    const picture = updateRestaurantForm.get("picture") || ''
-    const address = updateRestaurantForm.get("address") || ''
-    const province = updateRestaurantForm.get("province") || ''
-    const postalcode = updateRestaurantForm.get("postalcode") || ''
-    const tel = updateRestaurantForm.get("tel") || ''
+    'use server';
+    const name = updateRestaurantForm.get("name") || '';
+    const foodtype = updateRestaurantForm.get("foodtype") || '';
+    const picture = updateRestaurantForm.get("picture") || '';
+    const address = updateRestaurantForm.get("address") || '';
+    const province = updateRestaurantForm.get("province") || '';
+    const postalcode = updateRestaurantForm.get("postalcode") || '';
+    const tel = updateRestaurantForm.get("tel") || '';
 
     const updateRestaurantResponse = await updateRestaurant(params.rid, {
       name: name as string,
@@ -35,103 +34,52 @@ const UpdateRestaurantPage = async ({ params }: { params: { rid: string } }) => 
       tel: tel as string,
       picture: picture as string,
       token: session.user.token
-    })
+    });
     if (updateRestaurantResponse.success) {
-      revalidateTag("restaurant")
-      redirect(`/restaurants/${params.rid}`)
+      revalidateTag("restaurant");
+      redirect(`/restaurants/${params.rid}`);
     }
-  }
+  };
 
   return profile.data.role === "admin" ? (
-    <main className="bg-slate-100 p-5 mt-[80px] mx-8">
-      <form action={handleUpdateRestaurant} className="mx-8 ">
+    <main className="pt-[80px] bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 p-8 h-dvh">
+      <form action={handleUpdateRestaurant} className="max-w-4xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+        <h2 className="text-2xl font-semibold text-blue-700 dark:text-blue-400 mb-6">Update Restaurant</h2>
 
-        <div className="text-2xl text-blue-700 my-3">
+        <div className="space-y-4">
+          {[
+            { label: "Restaurant Name", name: "name", type: "text", placeholder: "Restaurant Name", defaultValue: restaurantDetail.name },
+            { label: "Food Type", name: "foodtype", type: "text", placeholder: "Food Type", defaultValue: restaurantDetail.foodtype },
+            { label: "Picture URL", name: "picture", type: "text", placeholder: "Picture URL", defaultValue: restaurantDetail.picture },
+            { label: "Address", name: "address", type: "text", placeholder: "Address", defaultValue: restaurantDetail.address },
+            { label: "Province", name: "province", type: "text", placeholder: "Province", defaultValue: restaurantDetail.province },
+            { label: "Postal Code", name: "postalcode", type: "text", placeholder: "Postal Code", defaultValue: restaurantDetail.postalcode },
+            { label: "Telephone Number", name: "tel", type: "text", placeholder: "Telephone Number", defaultValue: restaurantDetail.tel }
+          ].map(({ label, name, type, placeholder, defaultValue }) => (
+            <div key={name} className="flex items-center space-x-4">
+              <label htmlFor={name} className="w-1/3 text-gray-700 dark:text-gray-300">{label}</label>
+              <input
+                type={type}
+                name={name}
+                id={name}
+                placeholder={placeholder}
+                required
+                defaultValue={defaultValue}
+                className="w-2/3 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          ))}
+        </div>
+
+        <button
+          type="submit"
+          className="w-full mt-6 bg-sky-600 hover:bg-indigo-600 dark:bg-blue-500 dark:hover:bg-blue-700 text-white p-3 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
           Update Restaurant
-        </div>
-
-        <div className="flex items-center w-1/2 my-2">
-
-          <label className="w-[35%] block text-gray-700 pr-4" htmlFor="name">
-            Restaurant Name
-          </label>
-
-          <input type='text' required id="name" name="name" placeholder="Restaurant Name" defaultValue={restaurantDetail.name}
-            className="bg-white border-2 border-gray-200 rounded w-full p-2 text-gray-700 focus:outline-none focus:border-blue-400" />
-
-        </div>
-
-        <div className="flex items-center w-1/2 my-2">
-
-          <label className="w-[35%] block text-gray-700 pr-4" htmlFor="foodtype">
-            Food Type
-          </label>
-
-          <input type='text' required id="foodtype" name="foodtype" placeholder="Food Type" defaultValue={restaurantDetail.foodtype}
-            className="bg-white border-2 border-gray-200 rounded w-full p-2 text-gray-700 focus:outline-none focus:border-blue-400" />
-
-        </div>
-
-        <div className="flex items-center w-1/2 my-2">
-
-          <label className="w-[35%] block text-gray-700 pr-4" htmlFor="picture">
-            Picture
-          </label>
-
-          <input type='text' required id="picture" name="picture" placeholder="URL" defaultValue={restaurantDetail.picture}
-            className="bg-white border-2 border-gray-200 rounded w-full p-2 text-gray-700 focus:outline-none focus:border-blue-400" />
-
-        </div>
-
-        <div className="flex items-center w-1/2 my-2">
-
-          <label className="w-[35%] block text-gray-700 pr-4" htmlFor="address">
-            Address
-          </label>
-
-          <input type='text' required id="address" name="address" placeholder="Address" defaultValue={restaurantDetail.address}
-            className="bg-white border-2 border-gray-200 rounded w-full p-2 text-gray-700 focus:outline-none focus:border-blue-400" />
-
-        </div>
-
-        <div className="flex items-center w-1/2 my-2">
-
-          <label className="w-[35%] block text-gray-700 pr-4" htmlFor="province">
-            Province
-          </label>
-
-          <input type='text' required id="province" name="province" placeholder="Province" defaultValue={restaurantDetail.province}
-            className="bg-white border-2 border-gray-200 rounded w-full p-2 text-gray-700 focus:outline-none focus:border-blue-400" />
-
-        </div>
-
-        <div className="flex items-center w-1/2 my-2">
-
-          <label className="w-[35%] block text-gray-700 pr-4" htmlFor="postalcode">
-            Postal Code
-          </label>
-
-          <input type='text' required id="postalcode" name="postalcode" placeholder="Postal Code" defaultValue={restaurantDetail.postalcode}
-            className="bg-white border-2 border-gray-200 rounded w-full p-2 text-gray-700 focus:outline-none focus:border-blue-400" />
-
-        </div>
-
-        <div className="flex items-center w-1/2 my-2">
-
-          <label className="w-[35%] block text-gray-700 pr-4" htmlFor="tel">
-            Telephone Number
-          </label>
-
-          <input type='text' required id="tel" name="tel" placeholder="Telephone Number" defaultValue={restaurantDetail.tel}
-            className="bg-white border-2 border-gray-200 rounded w-full p-2 text-gray-700 focus:outline-none focus:border-blue-400" />
-
-        </div>
-
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white p-2 rounded">Update Restaurant</button>
-
+        </button>
       </form>
     </main>
-  ) : null
-}
+  ) : null;
+};
 
-export default UpdateRestaurantPage
+export default UpdateRestaurantPage;

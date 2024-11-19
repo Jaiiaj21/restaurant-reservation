@@ -9,27 +9,33 @@ const Banner = () => {
   const router = useRouter();
 
   return (
-    <div className="block p-1 m-0 w-screen h-[100vh] relative" onClick={() => { setIndex(index + 1); console.log(index); }}>
-      <Image
-        src={covers[index % 3]}
-        alt="cover"
-        fill
-        className="object-cover"
-      />
-      <div className="relative top-[100px] z-20 text-center">
-        <h1 className="text-4xl font-medium">Your Travel Partner</h1>
-        <h3 className="text-xl">Explore Your World with Us</h3>
-      </div>
-
-      <button className="bg-white text-cyan-600 border
-      border-cyan-600 font-semibold py-2 px-2 m-2 rounded z-30
-      absolute bottom-0 right-0 hover:bg-cyan-600 hover:text-white hover:border-transparent"
-        onClick={(e) => { e.stopPropagation(); router.push('/restaurants'); }}
+    <div className="relative min-h-screen flex flex-col items-center justify-center p-4">
+      <video 
+        className="absolute inset-0 w-full h-full object-cover opacity-70"
+        autoPlay
+        loop
+        muted
       >
-        Select Your Restaurant Partner NOW
-      </button>
+        <source src="/videos/restaurant-background.webm" type="video/webm" />
+        Your browser does not support the video tag.
+      </video>
+
+       <div className="absolute inset-0 bg-black opacity-40"></div>
+
+        <div className="relative text-center mb-12 z-10">
+          <h1 className="text-5xl font-extrabold text-white mb-4">
+            Welcome to PJ Restaurant Reservations
+          </h1>
+          <p className="text-lg text-white mb-6 max-w-xl mx-auto leading-relaxed ">
+            Book your table in advance and enjoy a seamless dining experience.
+          </p>
+          <button className="bg-blue-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-600 transition"
+            onClick={(e) => { e.stopPropagation(); router.push('/restaurants'); }}>
+            Book Now !
+          </button>
+        </div>
     </div>
-  )
+  );
 }
 
 export default Banner;
