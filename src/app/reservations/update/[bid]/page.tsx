@@ -68,8 +68,8 @@ const updateReservationPage = ({ params }: { params: { bid: string } }) => {
       </div>
 
       <div className="w-1/3 flex justify-center">
-        <button className="block w-full rounded-md bg-sky-600 hover:bg-indigo-600 px-4 py-3 text-white shadow-lg mt-6 focus:outline-none focus:ring-2 focus:ring-blue-500" onClick={handleUpdateReservation}>
-          Update Restaurant
+        <button className="block w-full rounded-md bg-sky-600 hover:bg-indigo-600 dark:bg-blue-500 dark:hover:bg-blue-700 px-4 py-3 text-white shadow-lg mt-6 focus:outline-none focus:ring-2 focus:ring-blue-500" onClick={handleUpdateReservation}>
+          Update Reservation
         </button>
 
       </div>

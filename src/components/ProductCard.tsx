@@ -19,7 +19,7 @@ const ProductCard = ({ name, imgSrc, onCompare }: { name: string, imgSrc: string
       {
         onCompare ? (
           <button
-            className="block h-[10%] text-sm rounded-md bg-sky-600 hover:bg-indigo-600 mx-2 px-3 py-1 text-white shadow-sm transition-colors"
+            className="block h-[10%] text-sm rounded-md bg-sky-600 hover:bg-indigo-600 dark:bg-blue-500 dark:hover:bg-blue-700 mx-2 px-3 py-1 text-white shadow-sm transition-colors"
             onClick={(e) => { e.stopPropagation(); e.preventDefault(); onCompare(name); }}
           >
             Compare

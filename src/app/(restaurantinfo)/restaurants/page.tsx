@@ -17,8 +17,8 @@ const Restaurant = async () => {
       <Suspense fallback={<div className="flex justify-center items-center h-full"><CircularProgress color="inherit" /></div>}>
         <RestaurantCatalog restaurantJson={restaurants} />
         {profile?.data.role === 'admin' && (
-          <div className="px-6 py-3 rounded-md text-md text-slate-50 bg-indigo-600 hover:bg-indigo-700 fixed right-4 bottom-4 shadow-lg transition-opacity
-                          dark:text-slate-50 dark:bg-indigo-600 dark:hover:bg-indigo-700">
+          <div className="px-6 py-3 rounded-md text-md text-slate-50 fixed right-4 bottom-4 shadow-lg transition-opacity
+                          dark:text-slate-50 bg-sky-600 hover:bg-indigo-600 dark:bg-blue-500 dark:hover:bg-blue-700">
             <Link href={'/restaurant/create'}>
               Create New Restaurant
             </Link>

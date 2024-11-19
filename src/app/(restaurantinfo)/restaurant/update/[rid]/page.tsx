@@ -42,7 +42,7 @@ const UpdateRestaurantPage = async ({ params }: { params: { rid: string } }) => 
   };
 
   return profile.data.role === "admin" ? (
-    <main className="pt-[80px] bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 p-8">
+    <main className="pt-[80px] bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 p-8 h-dvh">
       <form action={handleUpdateRestaurant} className="max-w-4xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
         <h2 className="text-2xl font-semibold text-blue-700 dark:text-blue-400 mb-6">Update Restaurant</h2>
 
@@ -50,7 +50,7 @@ const UpdateRestaurantPage = async ({ params }: { params: { rid: string } }) => 
           {[
             { label: "Restaurant Name", name: "name", type: "text", placeholder: "Restaurant Name", defaultValue: restaurantDetail.name },
             { label: "Food Type", name: "foodtype", type: "text", placeholder: "Food Type", defaultValue: restaurantDetail.foodtype },
-            { label: "Picture URL", name: "picture", type: "text", placeholder: "Image URL", defaultValue: restaurantDetail.picture },
+            { label: "Picture URL", name: "picture", type: "text", placeholder: "Picture URL", defaultValue: restaurantDetail.picture },
             { label: "Address", name: "address", type: "text", placeholder: "Address", defaultValue: restaurantDetail.address },
             { label: "Province", name: "province", type: "text", placeholder: "Province", defaultValue: restaurantDetail.province },
             { label: "Postal Code", name: "postalcode", type: "text", placeholder: "Postal Code", defaultValue: restaurantDetail.postalcode },
@@ -73,7 +73,7 @@ const UpdateRestaurantPage = async ({ params }: { params: { rid: string } }) => 
 
         <button
           type="submit"
-          className="w-full mt-6 bg-blue-500 hover:bg-blue-700 text-white p-3 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full mt-6 bg-sky-600 hover:bg-indigo-600 dark:bg-blue-500 dark:hover:bg-blue-700 text-white p-3 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           Update Restaurant
         </button>

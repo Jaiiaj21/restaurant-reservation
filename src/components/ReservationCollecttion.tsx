@@ -62,7 +62,7 @@ const ReservationCollection = async ({ reservationJson, role, user_id, token }: 
 
                 <div className="flex justify-between mt-6">
                   <Link href={`/reservations/update/${reservationItem._id}?name=${reservationItem.restaurant?.name}`}
-                        className="block rounded-md bg-indigo-500 text-white px-3 py-2 hover:bg-indigo-600 transition-colors shadow-sm m-3">
+                        className="block rounded-md text-white px-3 py-2 bg-sky-600 hover:bg-indigo-600 dark:bg-blue-500 dark:hover:bg-blue-700 transition-colors shadow-sm m-3">
                       Update
                   </Link>
                   <DeleteReservationButton id={reservationItem._id} token={token} />

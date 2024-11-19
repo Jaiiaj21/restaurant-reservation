@@ -13,7 +13,7 @@ const RestaurantDetailPage = async ({ params }: { params: { rid: string } }) => 
   const profile = session?.user.token ? await getUserProfile(session.user.token) : null;
 
   return (
-    <main className="h-[100vh] text-center p-5 bg-blue-50 mt-12 dark:bg-gray-900">
+    <main className="h-[100vh] text-center p-5 bg-gray-50 mt-12 dark:bg-gray-900">
       <h1 className="text-3xl font-medium text-gray-800 mb-6 dark:text-gray-200">{restaurantDetail.name}</h1>
       
       <div className="flex flex-col md:flex-row items-center md:items-start my-5" key={params.rid}>
@@ -35,7 +35,7 @@ const RestaurantDetailPage = async ({ params }: { params: { rid: string } }) => 
 
           <Link href={session ? `/reservations/create?id=${params.rid}&name=${restaurantDetail.name}` : `/login`}>
             <button
-              className="block rounded-md bg-sky-600 hover:bg-indigo-600 dark:bg-sky-700 dark:hover:bg-indigo-700 px-3 py-2 text-white shadow-sm mt-4"
+              className="block rounded-md bg-sky-600 hover:bg-indigo-600 dark:bg-blue-500 dark:hover:bg-blue-700 px-3 py-2 text-white shadow-sm mt-4"
               aria-label="Book this restaurant"
             >
               Book Restaurant
