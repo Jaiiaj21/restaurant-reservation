@@ -22,7 +22,11 @@ interface ReservationItem {
   _id: string,
   bookingDate: string,
   numOfGuests: number,
-  user: string,
+  user: {
+    _id: string,
+    name: string,
+    email: string
+  },
   restaurant: {
     _id: string,
     name: string,

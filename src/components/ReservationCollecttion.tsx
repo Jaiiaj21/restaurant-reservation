@@ -12,6 +12,9 @@ interface ReservationCollectionProps {
 const ReservationCollection = async ({ reservationJson, role, user_id, token }: ReservationCollectionProps) => {
   const reservationJsonReady = await reservationJson;
 
+  const reservationList = reservationJsonReady.data
+  reservationList.sort((a, b) => a.user.name.localeCompare(b.user.name))
+
   if (reservationJsonReady.count === 0) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh]">
@@ -25,8 +28,8 @@ const ReservationCollection = async ({ reservationJson, role, user_id, token }: 
     <>
       <h1 className="text-3xl font-bold text-center text-gray-800 mb-8 dark:text-gray-200">Manage Reservations</h1>
       <div className="flex flex-wrap justify-center gap-6 p-4 ">
-        {reservationJsonReady.data.map((reservationItem: ReservationItem) => {
-          if (role === "admin" || (role === "user" && user_id === reservationItem.user)) {
+        {reservationList.map((reservationItem: ReservationItem) => {
+          if (role === "admin" || (role === "user" && user_id === reservationItem.user._id)) {
             return (
               <div
                 key={reservationItem._id}
@@ -35,7 +38,7 @@ const ReservationCollection = async ({ reservationJson, role, user_id, token }: 
               >
                 <div className="flex items-center mb-4">
                   <UserIcon className="h-6 w-6 text-gray-500 mr-2" />
-                  <p className="text-lg font-medium text-gray-700 dark:text-gray-200">User: {reservationItem.user}</p>
+                  <p className="text-lg font-medium text-gray-700 dark:text-gray-200">User: {reservationItem.user.name}</p>
                 </div>
 
                 <div className="text-gray-600 mb-2 dark:text-gray-200">
