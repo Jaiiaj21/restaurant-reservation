@@ -39,3 +39,24 @@ interface ReservationJson {
   count: number,
   data: ReservationItem[]
 }
+
+interface LoginJson {
+  success: boolean,
+  _id: string,
+  name: string,
+  email: string,
+  token: string
+}
+
+interface ProfileJson {
+  success: boolean,
+  data: {
+    _id: string,
+    name: string,
+    email: string,
+    tel: string,
+    role: string,
+    createdAt: string,
+    __v: number
+  }
+}
