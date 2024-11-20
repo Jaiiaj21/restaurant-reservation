@@ -25,12 +25,12 @@ const createReservation = async ({
     body: JSON.stringify({ ...formData })
   })
 
-  if (!response.ok) {
+  const res = await response.json();
+
+  if (!response.ok && !res.message.includes('has already made 3 bookings')) {
     console.error('Error during create new reservation:', response);
     throw new Error("Failed to create new reservation")
   }
-
-  const res = await response.json();
 
   return res
 }

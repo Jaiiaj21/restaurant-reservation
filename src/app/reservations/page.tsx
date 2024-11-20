@@ -17,14 +17,12 @@ const ReservationPage = async () => {
     <main className="text-center pt-[80px] h-full flex items-center flex-col dark:bg-gray-900 min-h-screen">
       <Suspense fallback={<div className="flex justify-center items-center h-[90vh]"><CircularProgress color="inherit" /></div>}>
         <ReservationCollection reservationJson={reservations} role={profile.data.role} user_id={profile.data._id} token={session.user.token} />
-        {/* {
-          profile && profile.data.role === 'admin' &&
-          <div className={`px-[20px] py-[12px] rounded-[6px] text-md text-slate-50 bg-slate-700 hover:opacity-80 active:opacity-60 disabled:opacity-60 fixed right-4 bottom-4`}>
-            <Link href={'/restaurant/create'}>
-              Create New Restaurant
-            </Link>
-          </div>
-        } */}
+        <div className="px-6 py-3 rounded-md text-md text-slate-50 fixed right-4 bottom-4 shadow-lg transition-opacity
+                          dark:text-slate-50 bg-sky-600 hover:bg-indigo-600 dark:bg-blue-500 dark:hover:bg-blue-700">
+          <Link href={'/restaurants'}>
+            Create New Reservation
+          </Link>
+        </div>
       </Suspense>
     </main >
   )

@@ -19,6 +19,7 @@ const createReservationPage = () => {
 
   const [bookingDate, setBookingDate] = useState<Dayjs | null>(null)
   const [numOfGuest, setNumOfGuest] = useState(0)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const makeReservation = async () => {
     if (rid && restaurantName && bookingDate && numOfGuest) {
@@ -32,6 +33,10 @@ const createReservationPage = () => {
       if (createResponse.success) {
         router.push('/reservations')
         router.refresh()
+      } else if (createResponse.message && createResponse.message.includes('has already made 3 bookings')) {
+        setErrorMessage('You has already made 3 bookings')
+      } else if (!createResponse.success) {
+        setErrorMessage('Can not booking. Please contact admin')
       }
     }
   }
@@ -74,6 +79,10 @@ const createReservationPage = () => {
         </button>
 
       </div>
+
+      {errorMessage && (
+        <p className="mt-[5px] text-sm leading-5 text-[#EA4335] dark:text-[#fcb1b1]">{errorMessage}</p>
+      )}
     </main>
   );
 }
