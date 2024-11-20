@@ -9,8 +9,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/authOptions";
 import NextAuthProvider from "@/providers/NextAuthProvider";
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
 }
 
 const inter = Inter({ subsets: ['latin'] });
